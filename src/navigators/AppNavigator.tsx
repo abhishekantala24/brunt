@@ -4,7 +4,6 @@ import { Route, Routes } from "react-router-dom";
 import Header from "../component/Header/header";
 import { useSelector } from "react-redux";
 import { sidebarOpen, stateSelector } from "../redux/state/stateSlice";
-import Sidebar from "../component/Sidebar/sidebar";
 import useCheckMobileScreen from "../utils/useCheckMobileScreen";
 import { useAppDispatch } from "../redux/store"; 
 import Home from "../screen/App/Home";
@@ -29,7 +28,6 @@ const AppNavigator: React.FC = (): JSX.Element => {
           </div>
           <Routes>
             <Route path="/" element={<Home />} />
-             
           </Routes>
         </section>
       </div>
