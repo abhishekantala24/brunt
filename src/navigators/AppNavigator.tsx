@@ -7,6 +7,7 @@ import { sidebarOpen, stateSelector } from "../redux/state/stateSlice";
 import useCheckMobileScreen from "../utils/useCheckMobileScreen";
 import { useAppDispatch } from "../redux/store"; 
 import Home from "../screen/App/Home";
+import Cart from "../screen/App/Cart";
 
 const AppNavigator: React.FC = (): JSX.Element => {
   const isMobile = useCheckMobileScreen();
@@ -28,6 +29,7 @@ const AppNavigator: React.FC = (): JSX.Element => {
           </div>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/cart" element={<Cart />} />
           </Routes>
         </section>
       </div>

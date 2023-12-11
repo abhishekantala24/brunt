@@ -1,21 +1,20 @@
 import { Action, AnyAction, configureStore, Store, ThunkAction } from "@reduxjs/toolkit"
 import { useDispatch } from "react-redux"
 import { ThunkDispatch } from "redux-thunk"
-import { persistStore, persistReducer, PERSIST, PURGE, REHYDRATE } from "redux-persist"
+import { persistStore, persistReducer } from "redux-persist"
 import { createStateSyncMiddleware } from "redux-state-sync"
-import storage from "redux-persist/lib/storage"
 import { Persistor } from "redux-persist/lib/types"
 import { encryptTransform } from "redux-persist-transform-encrypt"
 import combineReducer from "./reducer"
+import localForage from "localforage"
 
 const persistConfig = {
-  key: "Talentrackr",
-  storage,
+  key: "weedman",
+  storage: localForage,
   transforms: [
     encryptTransform({
       secretKey: process.env.REACT_APP_PERSIST_SECRET_KEY || "",
       onError: (error: Error) => {
-        // Handle the error.
         console.log("ERROR", error)
       }
     })
@@ -34,6 +33,13 @@ export type AppStore = Omit<Store<RootState, AnyAction>, "dispatch"> & {
 }
 
 const rootReducer = (state: any, action: AnyAction) => {
+  if (action.type === "auth/logout/fulfilled") {
+    state = {
+      ...state,
+      Customer: undefined,
+      ShoppingCartState: undefined
+    }
+  }
   return persistedReducer(state, action)
 }
 
@@ -45,9 +51,9 @@ export const store: AppStore = configureStore({
       immutableCheck: false
     }).concat([
       createStateSyncMiddleware({
-        channel: "Talentrackr",
-        broadcastChannelOption: { type: "localstorage" },
-        blacklist: [PERSIST, PURGE, REHYDRATE]
+        channel: "brunt",
+        broadcastChannelOption: { type: "localstorage", webWorkerSupport: false },
+        blacklist: ['persist/PERSIST', 'persist/PURGE', 'persist/REHYDRATE']
       })
     ])
 })

@@ -14,7 +14,8 @@ import WipModalView from "./component/WipModal/WipModal";
 
 const App: React.FC = (): JSX.Element => {
   const authUser = useSelector(authSelector)  
-
+    // console.log(authUser);
+    
   return (
     <>
       <ScrollToTop />

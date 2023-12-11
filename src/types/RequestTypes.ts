@@ -1,8 +1,6 @@
 export interface LoginRequestModel {
-  Email: string;
+  email: string;
   password: string;
-  browserType: string;
-  BrowserVersions: string;
 }
 
 export interface LocalViewModel {

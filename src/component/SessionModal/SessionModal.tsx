@@ -11,13 +11,10 @@ import { logoutAction } from "../../redux/auth/middleware";
 const SessionModal: React.FC = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const sessionState = useSelector(stateSelector).sessionModal
-  const userProfile = useSelector(authSelector).userDetails
 
   const handleClose = () => {
     dispatch(sessionModal({ sessionModal: false }))
-    dispatch(logoutAction({
-      Email: userProfile?.email
-    }))
+ 
   }
 
   return (

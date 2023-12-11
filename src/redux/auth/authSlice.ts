@@ -1,31 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../store"
-import { getUser } from "../../services/token"
 import { logoutAction, loginUserByEmailAction } from "./middleware"
-import { LoginResponseModel } from "../../types/ResponseTypes"
+import { AuthResponse } from "../../types/ResponseTypes"
 
-const INITIAL_STATE: LoginResponseModel = {
-  token: getUser() || undefined,
-  response: 0,
-  responsemassage: "",
-  userDetails: null
+const INITIAL_STATE: AuthResponse = {
+  token: "",
+  email: "",
+  firstName: "",
+  lastName: "",
+  phone: "",
+  id: ""
 }
 
 const authSlice = createSlice({
-  name: "auth/logout",
+  name: "auth",
   initialState: INITIAL_STATE,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(logoutAction.fulfilled, (state) => ({
       ...state,
       token: undefined,
-      userDetails: undefined,
+      email: undefined,
+      firstName: undefined,
+      lastName: undefined,
+      phone: undefined,
+      id: undefined,
     }))
     builder.addCase(loginUserByEmailAction.fulfilled, (state, { payload }) => ({
       ...state,
-      token: payload.token,
-      userDetails: payload.userDetails
-    }))
+      token: payload.data.token,
+      email: payload.data.email,
+      firstName: payload.data.firstName,
+      lastName: payload.data.lastName,
+      phone: payload.data.phone,
+      id: payload.data.id,
+    }
+    ))
   },
 })
 

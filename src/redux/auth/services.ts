@@ -6,9 +6,9 @@ import { config } from "../../utils/config"
 
 export const loginWithEmailAsync = async (loginRequest: LoginRequestModel) => {
   try {
-    const response = await axiosInstance.get<LoginResponseModel>(`${config.apiURL}/api/Login/Login?email=${loginRequest.Email}&password=${loginRequest.password}&browserType=google&BrowserVersions=1.2`)
+    const response = await axiosInstance.post<LoginResponseModel>(`${config.apiURL}/auth/login`, loginRequest)
 
-    setUser(response?.data?.token)
+    setUser(response?.data?.data?.token)
     return response
   } catch (err) {
     return isAxiosError(err)
